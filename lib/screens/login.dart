@@ -16,7 +16,8 @@ class LoginPage extends StatelessWidget {
             height: MediaQuery.of(context).size.height,
             decoration: BoxDecoration(
                 image: DecorationImage(
-                    image: AssetImage('assets/addu-jacinto.jpg'),
+                    image: NetworkImage(
+                        'https://firebasestorage.googleapis.com/v0/b/flutter-chat-app-fd3bf.appspot.com/o/assets%2Faddu-jacinto.jpg?alt=media&token=edb508a2-8ba9-42c2-a85c-2dfe7442dbd6'),
                     fit: BoxFit.cover)),
           ),
           Center(child: LayoutBuilder(

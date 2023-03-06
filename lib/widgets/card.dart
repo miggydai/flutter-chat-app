@@ -43,9 +43,7 @@ class MyCard extends StatelessWidget {
                 width: MediaQuery.of(context).size.width * .4,
                 height: 50,
                 child: button(
-                  icon: FontAwesomeIcons.doorOpen,
-                  text: "Login",
-                )),
+                    icon: FontAwesomeIcons.doorOpen, text: "Login", n: 1)),
             SizedBox(
               height: 18,
               child: Text("or"),
@@ -54,9 +52,9 @@ class MyCard extends StatelessWidget {
                 width: MediaQuery.of(context).size.width * .4,
                 height: 50,
                 child: button(
-                  icon: FontAwesomeIcons.google,
-                  text: " Login with Google",
-                )),
+                    icon: FontAwesomeIcons.google,
+                    text: " Login with Google",
+                    n: 1)),
           ],
         ),
       ),
