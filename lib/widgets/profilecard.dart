@@ -22,7 +22,7 @@ class ProfileCard extends StatelessWidget {
         children: [
           CircleAvatar(
             backgroundImage: NetworkImage(image),
-            radius: 40,
+            radius: 60,
             backgroundColor: Colors.grey[800],
           ),
           SizedBox(height: 10),

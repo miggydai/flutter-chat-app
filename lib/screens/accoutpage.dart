@@ -70,7 +70,12 @@ class _ChooseAccPageState extends State<ChooseAccPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text("Log in as:"),
+              Text("Log in as:",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 25,
+                    fontWeight: FontWeight.bold,
+                  )),
               SizedBox(
                 height: 15,
               ),

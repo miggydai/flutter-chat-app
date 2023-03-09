@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:flutter_chat_app/services/auth_services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class button extends StatelessWidget {
@@ -21,9 +22,12 @@ class button extends StatelessWidget {
 
 ElevatedButton btn1(BuildContext context, IconData ico, String txt) {
   return ElevatedButton.icon(
-      onPressed: () {
-        Navigator.pushNamedAndRemoveUntil(
-            context, '/ChooseAccount', ModalRoute.withName('/'));
+      onPressed: () async {
+        await AuthService().signInWithGoogle().then((value) {
+          print(value.user?.displayName.toString());
+          Navigator.pushNamedAndRemoveUntil(
+              context, '/ChooseAccount', ModalRoute.withName('/'));
+        }).onError((error, stackTrace) {});
       },
       icon: Icon(
         ico,
