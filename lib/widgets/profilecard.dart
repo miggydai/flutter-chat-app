@@ -17,7 +17,10 @@ class ProfileCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        Navigator.pushNamedAndRemoveUntil(
+            context, '/Home', ModalRoute.withName('/'));
+      },
       child: Column(
         children: [
           CircleAvatar(
