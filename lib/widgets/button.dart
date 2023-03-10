@@ -3,7 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_chat_app/services/auth_services.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+import '../globals.dart';
 
 class button extends StatelessWidget {
   final IconData icon;
@@ -25,6 +28,8 @@ ElevatedButton btn1(BuildContext context, IconData ico, String txt) {
       onPressed: () async {
         await AuthService().signInWithGoogle().then((value) {
           print(value.user?.displayName.toString());
+          Globals.fullName = value.user?.displayName.toString() ?? "null";
+          Globals.profPic = value.user?.photoURL.toString() ?? "null";
           Navigator.pushNamedAndRemoveUntil(
               context, '/ChooseAccount', ModalRoute.withName('/'));
         }).onError((error, stackTrace) {});

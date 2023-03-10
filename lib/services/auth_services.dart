@@ -25,6 +25,7 @@ class AuthService {
     }
   }
 
+  // google sign in mobile
   Future<UserCredential> signInWithGoogleMobile() async {
     // Trigger the authentication flow
     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
@@ -43,6 +44,7 @@ class AuthService {
     return await FirebaseAuth.instance.signInWithCredential(credential);
   }
 
+  //google sign in web
   Future<UserCredential> signInWithGoogle() async {
     // Create a new provider
     GoogleAuthProvider googleProvider = GoogleAuthProvider();
@@ -56,5 +58,15 @@ class AuthService {
 
     // Or use signInWithRedirect
     // return await FirebaseAuth.instance.signInWithRedirect(googleProvider);
+  }
+
+  //sing out
+  Future signOut() async {
+    try {
+      return await _auth.signOut();
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
   }
 }

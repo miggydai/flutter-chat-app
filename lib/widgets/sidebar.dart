@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_chat_app/services/auth_services.dart';
 import 'package:sidebarx/sidebarx.dart';
+
+import '../globals.dart';
 
 class Sidebar extends StatelessWidget {
   const Sidebar({
@@ -32,8 +35,8 @@ class Sidebar extends StatelessWidget {
         hoverColor: actionColor,
         textStyle: TextStyle(color: Colors.white.withOpacity(0.7)),
         selectedTextStyle: const TextStyle(color: Colors.white),
-        itemTextPadding: const EdgeInsets.only(left: 30),
-        selectedItemTextPadding: const EdgeInsets.only(left: 30),
+        // itemTextPadding: const EdgeInsets.only(left: 30),
+        // selectedItemTextPadding: const EdgeInsets.only(left: 30),
         itemDecoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
         ),
@@ -59,7 +62,10 @@ class Sidebar extends StatelessWidget {
           height: 100,
           child: Padding(
             padding: const EdgeInsets.all(16.0),
-            child: Image.asset('assets/addu-seal-black.png'),
+            child: CircleAvatar(
+              backgroundImage: NetworkImage(Globals.profPic),
+              radius: 20,
+            ),
           ),
         );
       },
@@ -85,11 +91,11 @@ class Sidebar extends StatelessWidget {
         SidebarXItem(
           icon: Icons.door_back_door_sharp,
           label: 'Logout',
-          onTap: () => Navigator.pushNamedAndRemoveUntil(
-            context,
-            '/',
-            ModalRoute.withName('/'),
-          ),
+          onTap: () async {
+            await AuthService().signOut();
+            Navigator.pushNamedAndRemoveUntil(
+                context, '/', ModalRoute.withName('/'));
+          },
         ),
       ],
     );

@@ -4,8 +4,10 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:flutter_chat_app/globals.dart';
 import 'package:flutter_chat_app/widgets/profilecard.dart';
 import 'package:flutter_chat_app/widgets/usercard.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import '../model/office.dart';
 
@@ -21,6 +23,8 @@ class _ChooseAccPageState extends State<ChooseAccPage> {
   final Stream<QuerySnapshot> _officeStream =
       FirebaseFirestore.instance.collection('office').snapshots();
   List<Office> _offices = [];
+  final name = Globals.fullName;
+  final pic = Globals.profPic;
 
   @override
   void initState() {
@@ -83,11 +87,7 @@ class _ChooseAccPageState extends State<ChooseAccPage> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  ProfileCard(
-                      image:
-                          "https://firebasestorage.googleapis.com/v0/b/flutter-chat-app-fd3bf.appspot.com/o/assets%2Faddu-seal-colorized.png?alt=media&token=ff46e8b1-5bfe-4d9d-bfed-858a3602ecef",
-                      name: "Miguel Dailisan",
-                      isActive: true),
+                  ProfileCard(image: pic, name: name, isActive: true),
                   Center(
                       child: StreamBuilder<QuerySnapshot>(
                     stream: _officeStream,
@@ -98,7 +98,7 @@ class _ChooseAccPageState extends State<ChooseAccPage> {
                       }
 
                       if (snapshot.connectionState == ConnectionState.waiting) {
-                        return CircularProgressIndicator();
+                        return SpinKitDancingSquare();
                       }
 
                       return Wrap(
