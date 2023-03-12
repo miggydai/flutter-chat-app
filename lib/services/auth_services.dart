@@ -1,14 +1,25 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_chat_app/model/usermodel.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final GoogleSignIn googleSignIn = GoogleSignIn();
+
+  UserModel? _userModelFromFirebase(User? user) {
+    if (user != null) {
+      return UserModel(uid: user.uid);
+    } else {
+      return null;
+    }
+  }
+
   //annonymous sign-in
   Future signInAnnonymously() async {
     try {
       UserCredential result = await _auth.signInAnonymously();
       User? user = result.user;
-      return user;
+      return _userModelFromFirebase(user);
     } catch (e) {
       return null;
     }
@@ -63,14 +74,19 @@ class AuthService {
   //sing out
   Future signOut() async {
     try {
-      return await _auth.signOut();
+      await _auth.signOut();
+      // await googleSignIn.signOut();
     } catch (e) {
       print(e.toString());
       return null;
     }
   }
 
-
-
-  
+  //auth change user stream
+  Stream<UserModel?> get onAuthStateChanged {
+    return _auth
+        .authStateChanges()
+        //.map((User? user) => _userModelFromFirebase(user));
+        .map(_userModelFromFirebase);
+  }
 }

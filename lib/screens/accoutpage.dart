@@ -53,79 +53,85 @@ class _ChooseAccPageState extends State<ChooseAccPage> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: [
-          Container(
-            width: double.infinity,
-            height: double.infinity,
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                // transform: GradientRotation(-140),
-                colors: [
-                  Color.fromRGBO(31, 47, 152, 1),
-                  Color.fromRGBO(46, 170, 250, 1)
-                ],
-              ),
-            ),
-          ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text("Log in as:",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 25,
-                    fontWeight: FontWeight.bold,
-                  )),
-              SizedBox(
-                height: 15,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  ProfileCard(image: pic, name: name, isActive: true),
-                  Center(
-                      child: StreamBuilder<QuerySnapshot>(
-                    stream: _officeStream,
-                    builder: (BuildContext context,
-                        AsyncSnapshot<QuerySnapshot> snapshot) {
-                      if (snapshot.hasError) {
-                        return Text('Something went wrong');
-                      }
+      body: Globals.profPic != ""
+          ? Stack(
+              children: [
+                Container(
+                  width: double.infinity,
+                  height: double.infinity,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      // transform: GradientRotation(-140),
+                      colors: [
+                        Color.fromRGBO(31, 47, 152, 1),
+                        Color.fromRGBO(46, 170, 250, 1)
+                      ],
+                    ),
+                  ),
+                ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text("Log in as:",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 25,
+                          fontWeight: FontWeight.bold,
+                        )),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        ProfileCard(image: pic, name: name, isActive: true),
+                        Center(
+                            child: StreamBuilder<QuerySnapshot>(
+                          stream: _officeStream,
+                          builder: (BuildContext context,
+                              AsyncSnapshot<QuerySnapshot> snapshot) {
+                            if (snapshot.hasError) {
+                              return Text('Something went wrong');
+                            }
 
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return SpinKitDancingSquare();
-                      }
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return SpinKitDancingSquare(
+                                color: Colors.white,
+                                size: 10.0,
+                              );
+                            }
 
-                      return Wrap(
-                        runSpacing: 8.0,
-                        spacing: 15.0,
-                        children: snapshot.data!.docs
-                            .map((DocumentSnapshot document) {
-                          Map<String, dynamic> data =
-                              document.data()! as Map<String, dynamic>;
-                          Office office = Office(
-                              office_id: data['office_id'],
-                              office_name: data['office_name'],
-                              bg_image: data['bg_image']);
-                          return ProfileCard(
-                              image: data['bg_image'],
-                              name: data['office_name'],
-                              isActive: true);
-                        }).toList(),
-                      );
-                    },
-                  )),
-                ],
-              ),
-            ],
-          )
-        ],
-      ),
+                            return Wrap(
+                              runSpacing: 8.0,
+                              spacing: 15.0,
+                              children: snapshot.data!.docs
+                                  .map((DocumentSnapshot document) {
+                                Map<String, dynamic> data =
+                                    document.data()! as Map<String, dynamic>;
+                                Office office = Office(
+                                    office_id: data['office_id'],
+                                    office_name: data['office_name'],
+                                    bg_image: data['bg_image']);
+                                return ProfileCard(
+                                    image: data['bg_image'],
+                                    name: data['office_name'],
+                                    isActive: true);
+                              }).toList(),
+                            );
+                          },
+                        )),
+                      ],
+                    ),
+                  ],
+                )
+              ],
+            )
+          : SpinKitCircle(color: Colors.white, size: 10.0),
     );
   }
 }
