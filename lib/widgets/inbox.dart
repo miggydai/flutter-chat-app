@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:flutter_chat_app/widgets/chatmembers.dart';
 
 class MyInbox extends StatelessWidget {
   const MyInbox({super.key});
@@ -10,7 +11,8 @@ class MyInbox extends StatelessWidget {
     return Container(
       width: MediaQuery.of(context).size.width * .2,
       height: MediaQuery.of(context).size.height,
-      child: Center(child: Text("inbox")),
+      color: Colors.pink,
+      child: ChatMember(),
     );
   }
 }
