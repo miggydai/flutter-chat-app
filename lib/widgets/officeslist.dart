@@ -1,16 +1,16 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
-import 'package:flutter_chat_app/widgets/chathead.dart';
+import 'package:flutter_chat_app/widgets/officehead.dart';
 
-class ChatMember extends StatefulWidget {
-  const ChatMember({super.key});
+class OfficeList extends StatefulWidget {
+  const OfficeList({super.key});
 
   @override
-  State<ChatMember> createState() => _ChatMemberState();
+  State<OfficeList> createState() => _OfficeListState();
 }
 
-class _ChatMemberState extends State<ChatMember> {
+class _OfficeListState extends State<OfficeList> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -19,10 +19,10 @@ class _ChatMemberState extends State<ChatMember> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Chats",
+            "Offices",
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 10),
           ),
-          ChatHead()
+          OfficeHead()
         ],
       ),
     );

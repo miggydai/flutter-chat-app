@@ -5,9 +5,9 @@ import 'package:flutter_chat_app/screens/accoutpage.dart';
 import 'package:flutter_chat_app/screens/authPage.dart';
 import 'package:flutter_chat_app/screens/homepage.dart';
 import 'package:flutter_chat_app/screens/login.dart';
+import 'package:flutter_chat_app/screens/officePage.dart';
 import 'package:flutter_chat_app/services/auth_services.dart';
 import 'package:provider/provider.dart';
-
 import 'firebase_options.dart';
 
 // com.migsD.flutter_chat_app
@@ -27,6 +27,7 @@ Future<void> main() async {
             '/Home': (context) => MyHomePage(),
             '/ChooseAccount': (context) => ChooseAccPage(),
             '/Login': (context) => LoginPage(),
+            '/Offices':(context) => MyOfficePage()
           },
         );
       }));

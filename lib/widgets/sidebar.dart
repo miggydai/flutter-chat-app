@@ -73,13 +73,22 @@ class Sidebar extends StatelessWidget {
         SidebarXItem(
           icon: Icons.message,
           label: 'messages',
-          onTap: () => Navigator.pushNamedAndRemoveUntil(
-              context, '/Home', ModalRoute.withName('/')),
+          onTap: () {
+            Navigator.pushNamedAndRemoveUntil(
+              context, '/Home', ModalRoute.withName('/'));
+              Globals.x = 0;
+              print(Globals.x);
+          }
         ),
         SidebarXItem(
           icon: Icons.people,
-          label: 'Contacts',
-          onTap: () {},
+          label: 'Office',
+          onTap: () {
+            Navigator.pushNamedAndRemoveUntil(
+              context, '/Offices', ModalRoute.withName('/'));
+            Globals.x = 1;
+            print(Globals.x);
+          },
         ),
         SidebarXItem(
           icon: Icons.person,

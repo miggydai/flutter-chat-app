@@ -3,49 +3,50 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
-import 'package:flutter_chat_app/model/message.dart';
 
-class ChatHead extends StatefulWidget {
-  const ChatHead({super.key});
+import '../model/office.dart';
+
+class OfficeHead extends StatefulWidget {
+  const OfficeHead({super.key});
 
   @override
-  State<ChatHead> createState() => _ChatHeadState();
+  State<OfficeHead> createState() => _OfficeHeadState();
 }
 
-class _ChatHeadState extends State<ChatHead> {
-  final FirebaseFirestore db = FirebaseFirestore.instance;
-  final Stream<QuerySnapshot> _messageStream =
-      FirebaseFirestore.instance.collection('messages').snapshots();
-  List<Message> _messages = [];
-
+class _OfficeHeadState extends State<OfficeHead> {
+ final FirebaseFirestore db = FirebaseFirestore.instance;
+  final Stream<QuerySnapshot> _officeStream =
+      FirebaseFirestore.instance.collection('office').snapshots();
+  List<Office> _offices = [];
   @override
   void initState() {
+    List<Office> allOffices = [];
     // TODO: implement initState
-    List<Message> allMessages = [];
-    db.collection("messages").get().then(
+    db.collection("office").get().then(
       (querySnapshot) {
         print("Successfully completed");
         for (var docSnapshot in querySnapshot.docs) {
-          Message message = Message(
-            name: docSnapshot.data()['name'],
-            message: docSnapshot.data()['message'],
-            picture: docSnapshot.data()['picture'],
+          Office office = Office(
+            office_id: docSnapshot.data()['office_id'],
+            office_name: docSnapshot.data()['office_name'],
+            bg_image: docSnapshot.data()['bg_image'],
           );
-          allMessages.add(message);
+          allOffices.add(office);
           print('${docSnapshot.id} => ${docSnapshot.data()}');
         }
 
         setState(() {
-          _messages = allMessages;
+          _offices = allOffices;
         });
       },
       onError: (e) => print("Error completing: $e"),
     );
   }
 
+
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
-      stream: _messageStream,
+      stream: _officeStream,
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasError) {
           return const Text('Something went wrong');
@@ -63,21 +64,12 @@ class _ChatHeadState extends State<ChatHead> {
                 .map((DocumentSnapshot document) {
                   Map<String, dynamic> data =
                       document.data()! as Map<String, dynamic>;
-                  Message message = Message(
-                      name: data['name'],
-                      message: data['message'],
-                      picture: data['picture']);
+                  Office office = Office(
+                      office_id: data['office_id'],
+                      office_name: data['office_name'],
+                      bg_image: data['bg_image']);
                   return ListTile(
-                    onTap: () {},
-                    title: Padding(padding: EdgeInsets.only(bottom: 8), child: Text(data['name'], style: TextStyle( fontWeight: FontWeight.bold),),),
-                    leading: Container(
-                      width: 50,
-                      height: 50,
-                      child: CircleAvatar( foregroundColor: Colors.red, radius: 20,),
-                    ),
-                    subtitle: Text(data['message']),
-                    trailing: Text("2hrs"),
-
+                    title: Text(data['office_name']),
                   );
                 })
                 .toList()
